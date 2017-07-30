@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>Cell.h</itemPath>
+      <itemPath>Map.h</itemPath>
       <itemPath>PathPlanning.h</itemPath>
       <itemPath>Quadrant.h</itemPath>
     </logicalFolder>
@@ -45,6 +46,8 @@
       </compileType>
       <item path="Cell.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Map.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PathPlanning.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PathPlanning.h" ex="false" tool="3" flavor2="0">
@@ -76,6 +79,8 @@
         </asmTool>
       </compileType>
       <item path="Cell.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Map.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PathPlanning.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -1,15 +1,14 @@
 #include "PathPlanning.h"
 #include <iostream>
 #include <stdint.h>
-PathPlanning::PathPlanning(uint32_t p_map_heigth, uint32_t p_map_width) : map_heigth(p_map_heigth), map_width(p_map_width)
+PathPlanning::PathPlanning(Map& p_map) :  map(p_map)
 {
-    map = new int8_t[p_map_heigth * p_map_width];
-    for (uint32_t i = 0; i < map_heigth * map_width; i++)
-            map[i] = 0;
+    for (uint32_t i = 0; i < p_map.map_heigth * p_map.map_width; i++)
+            p_map.cells[i] = 0;
 }
 
 std::vector<Cell*>* PathPlanning::FindPath(Cell p_begin, Cell p_end)
-{    
+{   
     std::map<uint32_t, Quadrant*> l_open_list;
     std::map<uint32_t, Quadrant*> l_closed_list;
 
@@ -58,8 +57,8 @@ std::vector<Cell*>* PathPlanning::FindPath(Cell p_begin, Cell p_end)
 
                 //It's verifying if position is valid
                 bool valid = (!((i == i_max - 2) && (j == j_max - 2))) &&
-                        (i >= 0) && (i < map_heigth) && (j >= 0) &&
-                        (j < map_width) && (map[i * map_width + j] == 0) &&
+                        (i >= 0) && (i < map.map_heigth) && (j >= 0) &&
+                        (j < map.map_width) && (map.cells[i * map.map_width + j] == 0) &&
                         (l_closed_list.find(l_temporary_key) == l_closed_list.end());
                 if (valid) {
 

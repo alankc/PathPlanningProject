@@ -16,15 +16,20 @@
 
 int main(int argc, char** argv) {
 
-    PathPlanning pp(500, 500);
+    Map* map = new Map;
+    map->map_heigth = 500;
+    map->map_width = 500;
+    map->cells = new int8_t[map->map_heigth * map->map_width];
+    
+    PathPlanning pp(*map);
     
     Cell begin;
     begin.y = 0;
     begin.x = 0;
     
     Cell end;
-    end.y = 98;
-    end.x = 496;
+    end.y = 178;
+    end.x = 257;
     
             
     std::vector<Cell*>* path = pp.FindPath(begin, end);
