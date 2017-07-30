@@ -11,15 +11,30 @@
  * Created on 26 de Julho de 2017, 12:49
  */
 
-#include <cstdlib>
+#include "PathPlanning.h"
+#include <iostream>
 
-using namespace std;
-
-/*
- * 
- */
 int main(int argc, char** argv) {
 
+    PathPlanning pp(500, 500);
+    
+    Cell begin;
+    begin.y = 0;
+    begin.x = 0;
+    
+    Cell end;
+    end.y = 98;
+    end.x = 496;
+    
+            
+    std::vector<Cell*>* path = pp.FindPath(begin, end);
+    std::cout << "--------------------------------" << std::endl;
+    for (uint32_t i = 0; i < path->size(); i++)
+    {
+        std::cout << path->at(i)->x << " " << path->at(i)->y << "\n";
+    }
+
+    
     return 0;
 }
 
