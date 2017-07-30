@@ -1,12 +1,6 @@
 #include "PathPlanning.h"
 #include <iostream>
 #include <stdint.h>
-PathPlanning::PathPlanning(Map& p_map) :  map(p_map)
-{
-    for (uint32_t i = 0; i < p_map.map_heigth * p_map.map_width; i++)
-            p_map.cells[i] = 0;
-}
-
 std::vector<Cell*>* PathPlanning::FindPath(Cell p_begin, Cell p_end)
 {   
     std::map<uint32_t, Quadrant*> l_open_list;

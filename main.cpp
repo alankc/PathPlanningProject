@@ -17,28 +17,56 @@
 int main(int argc, char** argv) {
 
     Map* map = new Map;
-    map->map_heigth = 500;
-    map->map_width = 500;
+    map->map_heigth = 20;
+    map->map_width = 30;
     map->cells = new int8_t[map->map_heigth * map->map_width];
+    
+    for (uint32_t i = 2; i < map->map_heigth - 2; i++)
+        map->cells[i * map->map_width + map->map_width / 2] = 1;
+   
     
     PathPlanning pp(*map);
     
     Cell begin;
-    begin.y = 0;
-    begin.x = 0;
+    begin.y = 1;
+    begin.x = 6;
     
     Cell end;
-    end.y = 178;
-    end.x = 257;
+    end.y = 16;
+    end.x = 20;
     
             
     std::vector<Cell*>* path = pp.FindPath(begin, end);
     std::cout << "--------------------------------" << std::endl;
+    for (uint32_t i = 0; i < map->map_heigth; i++)
+    {
+        std::cout << std::endl;
+        for (uint32_t j = 0; j < map->map_width; j++)
+        {
+            if ((map->cells[i * map->map_width + j] == 0))
+            {
+                bool tst = true;
+                for (uint32_t k = 0; k < path->size(); k++)
+                {
+                    if ((path->at(k)->x == j) && (path->at(k)->y == i))
+                    {
+                        std::cout << " ";
+                        tst = false;
+                        break;
+                    }
+                }
+                if (tst)
+                    std::cout << "#";  
+            }  
+            else
+                std::cout << "O";
+        }
+    }
+    std::cout << "\n******* Size: " << path->size() << " *******\n";
     for (uint32_t i = 0; i < path->size(); i++)
     {
-        std::cout << path->at(i)->x << " " << path->at(i)->y << "\n";
+        std::cout << "(" << path->at(i)->y << "," << path->at(i)->x << ")\n";
     }
-
     
     return 0;
 }

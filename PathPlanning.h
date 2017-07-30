@@ -9,7 +9,7 @@
 
 class PathPlanning {
 public:
-    PathPlanning(Map& p_map);
+    PathPlanning(Map& p_map) : map(p_map) {};
     std::vector<Cell*>* FindPath(Cell p_begin, Cell p_end);
 private:
     Map map;
