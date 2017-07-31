@@ -2,7 +2,10 @@
 #include <iostream>
 #include <stdint.h>
 std::vector<Cell*>* PathPlanning::FindPath(Cell p_begin, Cell p_end)
-{   
+{        
+    if ((map.cells[p_begin.y * map.map_width + p_begin.x] != 0) || (map.cells[p_end.y * map.map_width + p_end.x] != 0))
+        return new std::vector<Cell*>;    
+    
     std::map<uint32_t, Quadrant*> l_open_list;
     std::map<uint32_t, Quadrant*> l_closed_list;
 
