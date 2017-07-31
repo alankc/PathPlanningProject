@@ -24,18 +24,27 @@ int main(int argc, char** argv) {
     for (uint32_t i = 2; i < map.map_heigth - 2; i++)
         map.cells[i * map.map_width + map.map_width / 2] = 1;
    
-    for (uint32_t i = 2; i < map.map_width - 2; i++)
+    for (uint32_t i = 2; i < map.map_width; i++)
         map.cells[i + map.map_width * map.map_heigth/ 2] = 1;
+    
+    for (uint32_t i = 2; i < map.map_heigth - 5; i++)
+        map.cells[i * map.map_width + i] = 1;
+    
+    for (uint32_t i = 35; i < map.map_width - 5; i++)
+        map.cells[(map.map_heigth - 5) * map.map_width + i] = 1;
+    
+    for (uint32_t i = 35; i < map.map_width - 5; i++)
+        map.cells[5 * map.map_width + i] = 1;
     
     PathPlanning pp(map);
     
     Cell begin;
-    begin.y = 15;
-    begin.x = 175;
+    begin.y = 6;
+    begin.x = 9;
     
     Cell end;
-    end.y = 1;
-    end.x = 2;
+    end.y = 18;
+    end.x = 139;
     
             
     std::vector<Cell*>* path = pp.FindPath(begin, end);
@@ -58,7 +67,7 @@ int main(int argc, char** argv) {
                     }
                 }
                 if (tst)
-                    std::cout << "#";  
+                    std::cout << (char)177;  
             }  
             else
                 std::cout << "O";

@@ -38,12 +38,53 @@ std::vector<Cell*>* PathPlanning::FindPath(Cell p_begin, Cell p_end)
         //Verify if way to passing by current quadrant is shorter than old way, so, in 
         //this case recalculate G and F 
         //**********************************************************************************
-
+        int64_t i_current = l_current_quadrant->position.y;
+        int64_t j_current = l_current_quadrant->position.x;
         int64_t j_min = (int64_t)l_current_quadrant->position.x - 1;
         int64_t i_min = (int64_t)l_current_quadrant->position.y - 1;
         int64_t j_max = (int64_t)l_current_quadrant->position.x + 2;
         int64_t i_max = (int64_t)l_current_quadrant->position.y + 2;
+        
+        bool    block[9] = {true, true, true, true, false, true, true, true, true};
+        uint8_t k = 0;
+        for (int64_t i = i_min; i < i_max; i++) {
+            for (int64_t j = j_min; j < j_max; j++) {
+                
+                bool valid = (!((i == i_current) && (j == j_current))) &&
+                             (i >= 0) && (i < map.map_heigth) && (j >= 0) &&
+                             (j < map.map_width);
 
+                if (valid && (map.cells[i * map.map_width + j] == 1))
+                {
+                    if ((i == i_min) && (j == j_current))
+                    {
+                        block[0] = false;
+                        block[2] = false;
+                    }
+                    else if ((i == i_current) && (j == j_min))
+                    {
+                        block[0] = false;
+                        block[6] = false;
+                    }
+                    else if ((i == i_current) && (j == j_current + 1))
+                    {
+                        block[2] = false;
+                        block[8] = false; 
+                    }
+                    else if ((i == i_current + 1) && (j == j_current))
+                    {
+                        block[6] = false;
+                        block[8] = false; 
+                    }
+                }
+                else if (!valid)
+                    block[k] = false;
+                
+                k++;
+            }
+        }
+        
+        k = 0;
         for (int64_t i = i_min; i < i_max; i++) {
             for (int64_t j = j_min; j < j_max; j++) {
 
@@ -53,12 +94,14 @@ std::vector<Cell*>* PathPlanning::FindPath(Cell p_begin, Cell p_end)
                 uint32_t l_temporary_key = ToKey(l_temporary_cell);
 
                 //It's verifying if position is valid
-                bool valid = (!((i == i_max - 2) && (j == j_max - 2))) &&
-                        (i >= 0) && (i < map.map_heigth) && (j >= 0) &&
-                        (j < map.map_width) && (map.cells[i * map.map_width + j] == 0) &&
-                        (l_closed_list.find(l_temporary_key) == l_closed_list.end());
+                bool valid = block[k] && 
+                    (l_closed_list.find(l_temporary_key) == l_closed_list.end()) && 
+                    (map.cells[i * map.map_width + j] == 0);
+                
+                k = k + 1;
+                
                 if (valid) {
-
+                    
                     Quadrant* l_temporary_quadrant = new Quadrant;
 
                     std::pair<std::map<uint32_t, Quadrant*>::iterator, bool> verification = l_open_list.insert(std::make_pair(l_temporary_key, l_temporary_quadrant));
