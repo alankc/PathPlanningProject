@@ -1,16 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   main.cpp
- * Author: x
- *
- * Created on 26 de Julho de 2017, 12:49
- */
-
 #include "PathPlanning.h"
 #include <iostream>
 
@@ -24,7 +11,7 @@ int main(int argc, char** argv) {
     for (uint32_t i = 2; i < map.map_heigth - 2; i++)
         map.cells[i * map.map_width + map.map_width / 2] = 1;
    
-    for (uint32_t i = 2; i < map.map_width; i++)
+    for (uint32_t i = 2; i < map.map_width - 2; i++)
         map.cells[i + map.map_width * map.map_heigth/ 2] = 1;
     
     for (uint32_t i = 2; i < map.map_heigth - 5; i++)
@@ -39,12 +26,12 @@ int main(int argc, char** argv) {
     PathPlanning pp(map);
     
     Cell begin;
-    begin.y = 6;
-    begin.x = 9;
+    begin.y = 10;
+    begin.x = 65;
     
     Cell end;
-    end.y = 18;
-    end.x = 139;
+    end.y = 20;
+    end.x = 175;
     
             
     std::vector<Cell*>* path = pp.FindPath(begin, end);
